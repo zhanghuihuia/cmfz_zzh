@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.ChapterDao">
+    <select id="queryAll" resultType="com.baizhi.entity.Chapter">
+        select id,title,size,duration,downPath,uploadTime
+        from t_chapter
+        limit #{start},#{rows}
+    </select>
+
+    <select id="queryTotal" resultType="int">
+        select count(id)
+        from t_chapter
+    </select>
+
+    <select id="queryOne" resultType="com.baizhi.entity.Chapter">
+        select id,title,size,duration,downPath,uploadTime
+        from t_chapter
+        where id = #{id}
+    </select>
+
+    <select id="queryByZid" resultType="com.baizhi.entity.Chapter">
+        select id,title,size,duration,downPath,uploadTime
+        from t_chapter
+        where zid = #{zid}
+    </select>
+
+    <insert id="insert" parameterType="com.baizhi.entity.Chapter">
+        insert into t_chapter values(#{id},#{zid},#{title},#{size},#{duration},#{downPath},#{uploadTime})
+    </insert>
+
+    <delete id="delete" parameterType="java.lang.String">
+        delete from t_chapter where id = #{id}
+    </delete>
+
+    <delete id="deleteByZid" parameterType="java.lang.String">
+        delete from t_chapter where zid = #{zid}
+    </delete>
+
+    <update id="update" parameterType="com.baizhi.entity.Chapter">
+        update t_chapter set title = #{title},size = #{size},duration = #{duration},downPath = #{downPath},uploadTime = #{uploadTime}
+        where id = #{id}
+    </update>
+</mapper>

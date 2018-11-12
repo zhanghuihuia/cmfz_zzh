@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.AlbumDao">
+    <!--<resultMap id="albums" type="com.baizhi.entity.Album">
+        <id property="id" column="aid"/>
+        <result property="title" column="atitle" />
+        <result property="publishDate" column="apublishDate" />
+        <result property="count" column="acount" />
+        <result property="coverImg" column="acoverImg" />
+        <result property="star" column="astar" />
+        <result property="author" column="aauthor" />
+        <result property="broadCast" column="abroadCast" />
+        <result property="brief" column="abrief" />
+        <collection property="children" ofType="com.baizhi.entity.Chapter">
+            <id property="id" column="bid" />
+            <result property="title" column="btitle" />
+            <result property="size" column="bsize" />
+            <result property="duration" column="bduration" />
+            <result property="downPath" column="bdownPath" />
+            <result property="uploadTime" column="buploadTime" />
+        </collection>
+    </resultMap>
+    select a.id aid,a.title atitle,a.publishDate apublishDate,a.count acount,a.coverImg acoverImg,
+    a.star astar,a.author aauthor,a.broadCast abroadCast,a.brief abrief,
+    b.id bid,b.title btitle,b.size bsize,b.duration bduration,b.downPath bdownPath,
+    b.uploadTime buploadTime
+    from t_album a join t_chapter b
+    where a.id = b.zid
+    limit #{start},#{rows}-->
+    <select id="queryAll" resultType="com.baizhi.entity.Album">
+        select id,title,publishDate,count,coverImg,star,author,broadCast,brief
+        from t_album
+        limit #{start},#{rows}
+    </select>
+
+    <select id="queryTotal" resultType="int">
+        select count(id)
+        from t_album
+    </select>
+
+    <select id="queryOne" resultType="com.baizhi.entity.Album">
+        select id,title,publishDate,count,coverImg,star,author,broadCast,brief
+        from t_album
+        where id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.baizhi.entity.Album">
+        insert into t_album values(#{id},#{title},#{publishDate},#{count},#{coverImg},#{star},#{author},#{broadCast},#{brief})
+    </insert>
+
+    <delete id="delete" parameterType="java.lang.String">
+        delete from t_album where id = #{id}
+    </delete>
+
+
+    <update id="update" parameterType="com.baizhi.entity.Album">
+        update t_album set title = #{title},publishDate = #{publishDate},count = #{count},coverImg = #{coverImg},
+               star = #{star},author = #{author},broadCast = #{broadCast},brief = #{brief}
+        where id = #{id}
+    </update>
+
+</mapper>

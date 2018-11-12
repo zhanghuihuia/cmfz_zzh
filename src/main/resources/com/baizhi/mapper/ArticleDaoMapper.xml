@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.ArticleDao">
+    <resultMap id="articles" type="com.baizhi.entity.Article">
+        <id property="id" column="aid" />
+        <result property="title" column="atitle" />
+        <result property="imgPath" column="aimgPath" />
+        <result property="content" column="acontent" />
+        <result property="publishDate" column="apublishDate" />
+        <association property="guru" javaType="com.baizhi.entity.Guru">
+            <id property="id" column="bid" />
+            <result property="name" column="bname" />
+            <result property="headPic" column="bheadPic" />
+            <result property="sex" column="bsex" />
+            <result property="status" column="bstatus" />
+        </association>
+    </resultMap>
+    <select id="queryAll" resultMap="articles">
+        select a.id aid,a.title atitle,a.imgPath aimgPath,a.content acontent,a.publishDate apublishDate,
+               b.id bid,b.name bname,b.headPic bheadPic,b.sex bsex,b.status bstatus
+        from  t_article a join t_guru b
+				on b.id = a.sid
+        limit #{start},#{rows}
+    </select>
+
+    <select id="queryTotal" resultType="int">
+        select count(id)
+        from t_article
+    </select>
+
+    <select id="queryOne" resultType="com.baizhi.entity.Article">
+        select id,title,imgPath,content,publishDate
+        from t_article
+        where id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.baizhi.entity.Article">
+        insert into t_article values(#{id},#{title},#{imgPath},#{content},#{publishDate},#{sid})
+    </insert>
+
+    <delete id="delete" parameterType="java.lang.String">
+        delete from t_article where id = #{id}
+    </delete>
+
+
+    <update id="update" parameterType="com.baizhi.entity.Article">
+        update t_article set title = #{title},imgPath = #{imgPath},content = #{content},publishDate = #{publishDate}
+        where id = #{id}
+    </update>
+
+</mapper>

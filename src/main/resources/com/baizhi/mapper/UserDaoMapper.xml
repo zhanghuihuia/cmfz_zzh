@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.UserDao">
+    <select id="queryAll" resultType="com.baizhi.entity.User">
+        select id,phoneNum,name,password,salt,province,city,nickName,sex,sign,headPic,status
+        from t_user
+        limit #{start},#{rows}
+    </select>
+
+    <select id="queryOne" resultType="com.baizhi.entity.User">
+        select id,phoneNum,name,password,salt,province,city,nickName,sex,sign,headPic,status
+        from t_user
+        where id = #{id}
+    </select>
+
+    <select id="queryByUsername" resultType="com.baizhi.entity.User">
+        select id,phoneNum,name,password,salt,province,city,nickName,sex,sign,headPic,status
+        from t_user
+        where phoneNum = #{phoneNum}
+    </select>
+
+    <select id="queryTotal" resultType="int">
+        select count(id)
+        from t_user
+    </select>
+
+    <insert id="insert" parameterType="com.baizhi.entity.User">
+        insert into t_user values(#{id},#{phoneNum},#{name},#{password},#{salt},#{province},#{city},
+                                  #{nickName},#{sex},#{sign},#{headPic},#{status})
+    </insert>
+
+    <delete id="delete" parameterType="java.lang.String">
+        delete from t_user
+        where  id = #{id}
+    </delete>
+
+    <update id="update" parameterType="com.baizhi.entity.User">
+        update t_user
+        set name=#{name},password=#{password},salt=#{password},province=#{province},
+            city=#{city},nickName=#{nickName},sex=#{sex},sign=#{sign},headPic=#{headPic},status=#{status}
+        where id = #{id}
+    </update>
+
+    <update id="updateStatus" parameterType="com.baizhi.entity.User">
+        update t_user
+        set status = #{status}
+        where id = #{id}
+    </update>
+
+    <update id="updatePassword" parameterType="com.baizhi.entity.User">
+        update t_user
+        set password = #{password} ,salt= #{salt}
+        where id = #{id}
+    </update>
+
+</mapper>
